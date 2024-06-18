@@ -1,6 +1,13 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { Log } from '@abner/log'
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn'
+
+// 设置语言为中文
+dayjs.locale('zh-cn');
+
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {

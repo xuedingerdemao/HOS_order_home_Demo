@@ -5,5 +5,14 @@
   "main": "",
   "author": "",
   "license": "",
-  "dependencies": {}
+  "dependencies": {
+    "@orderHome/common/basic": "file:../../common/basic",
+    "@orderHome/common/public": "file:../../common/public",
+    "@orderHome/features/device": "file:../../features/device",
+    "@orderHome/features/duty": "file:../../features/duty",
+    "@orderHome/features/home": "file:../../features/home",
+    "@orderHome/features/message": "file:../../features/message",
+    "@orderHome/features/mine": "file:../../features/mine",
+    "@orderHome/features/stage": "file:../../features/stage",
+  }
 }
