@@ -4,6 +4,7 @@ import { window } from '@kit.ArkUI';
 import { Log } from '@abner/log'
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn'
+import { AdvSettingStore, ADV_WIN, getAdvAPI } from '@orderHome/common/basic';
 
 // 设置语言为中文
 dayjs.locale('zh-cn');
@@ -18,9 +19,33 @@ export default class EntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
   }
 
-  onWindowStageCreate(windowStage: window.WindowStage): void {
+  async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+
+    const advStore = new AdvSettingStore(this.context)
+
+
+    // 设置全屏 沉浸式
+    const win = await windowStage.getMainWindowSync()
+    win.setWindowLayoutFullScreen(true)
+    const topHeight = await win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM).topRect.height
+    const bottomHeight = await win.getWindowAvoidArea(window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR).bottomRect.height
+    AppStorage.setOrCreate("topHeight", px2vp(topHeight))
+    AppStorage.setOrCreate("bottomHeight", px2vp(bottomHeight))
+
+    //加载广告
+    const resAdv = await getAdvAPI()
+    await advStore.setAdvStore(resAdv) // 写入首选项
+    //如果有创建广告窗口
+    if (resAdv.showAd) {
+      const win = await windowStage.createSubWindow(ADV_WIN)
+      //展示窗口
+      await win.showWindow()
+      //展示广告窗口
+      // win.setUIContent('pages/StartAdv/Start')
+    }
+
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
