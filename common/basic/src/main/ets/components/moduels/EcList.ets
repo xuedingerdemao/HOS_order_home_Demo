@@ -1,7 +1,16 @@
 import promptAction from '@ohos.promptAction'
 
+/**
+ * @param loadingText: loading文案
+ * @param finishedText: 结束文案
+ * @param loading: boolean
+ * @param finished: boolean
+ * @param load(Fn): 触底加载数据
+ * @param refresh(Fn): 刷新列表
+ *
+ */
 @Component
-export struct EcList {
+struct EcList {
   sticky: StickyStyle = StickyStyle.None
   // 是否自动加载
   @Prop
@@ -150,3 +159,5 @@ export struct EcList {
     .layoutWeight(1)
   }
 }
+
+export { EcList }
