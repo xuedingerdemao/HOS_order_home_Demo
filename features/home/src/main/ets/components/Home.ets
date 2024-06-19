@@ -1,5 +1,7 @@
 import router from '@ohos.router'
-import { ResManager, RouterConfig } from '@orderHome/common/basic'
+import { ResManager, RouterConfig } from '@orderHome/common/basic/'
+import { getMessageCountApI } from '../api'
+import { promptAction } from '@kit.ArkUI'
 
 // 模块排列位置
 enum Pos {
@@ -119,6 +121,17 @@ export struct Home {
         })
       })
     }
+  }
+
+  /*-----------------------👇👇 function 👇👇--------------------------------*/
+
+  aboutToAppear(): void {
+    this.getMsgCount()
+  }
+
+  async getMsgCount() {
+    const data = await getMessageCountApI()
+    promptAction.showDialog({ message: JSON.stringify(data) })
   }
 
   build() {
