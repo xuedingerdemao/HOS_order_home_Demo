@@ -86,7 +86,7 @@ struct Index {
     .barPosition(BarPosition.End)
     .barBackgroundColor('#fff')
     .padding({
-      top: this.topHeight,
+      // top: this.topHeight,
       bottom: this.bottomHeight
     })
   }
