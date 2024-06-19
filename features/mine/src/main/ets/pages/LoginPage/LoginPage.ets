@@ -25,8 +25,12 @@ struct LoginPage {
     // 执行请求
     try {
       let controller = new authentication.AuthenticationController(getContext(this));
+      const testToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJjdXJyZW50VXNlciI6IntcInVzZXJuYW1lXCI6XCJobGJ6QHFxLmNvbVwiLFwicGFzc3dvcmRcIjpcIlwiLFwibmlja05hbWVcIjpcIuaKpOeQhumDqOmDqOmVv1wiLFwiZW1haWxcIjpcImhsYnpAcXEuY29tXCIsXCJyZWFsTmFtZVwiOlwi5oqk55CG6YOo6YOo6ZW_XCIsXCJtb2JpbGVcIjpcIlwiLFwic2V4XCI6XCJcIixcImRlcHROb1wiOlwiMTAwMDAxMDA1MDAwMDAwXCIsXCJwb3N0Tm9cIjpcIjEwMDAwMTAwNTAwMTAwMFwiLFwiaWRcIjoxNjcxNDAzMjU2NTE5MDc4MTU2LFwiY3JlYXRlVGltZVwiOjE2OTU3MTAwNzYwMDAsXCJ1cGRhdGVUaW1lXCI6MTY5NTcxMDA3NjAwMCxcImNyZWF0ZUJ5XCI6MTY3MTQwMzI1NjUxOTA3ODEzOH0iLCJleHAiOjE0Njc1MzEyNzU0fQ.n3EJBhfA1YIJ1tyASI4ruNbmDutY_xHAvdwPClizfpo'
       controller.executeRequest(authRequest, async (err, data) => {
         if (err) {
+
+          await this.tokenStore.setToken(testToken)
           Log.error('auth fail,error: %{public}s' + JSON.stringify(err));
           return;
         }
@@ -44,6 +48,7 @@ struct LoginPage {
         // 开发者处理code=> 获取一键登录的授权 code=>调用后台 api =》获取 token
         Log.warn(`华为授权码：${code}`)
         promptAction.showDialog({ message: `华为授权码：${code}` })
+        /*测试用*/
         const token = await LoginApI({
           code: code!,
           clientId: '111293791',
