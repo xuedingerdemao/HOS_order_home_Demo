@@ -1,8 +1,8 @@
 export class RouterConfig {
   // 基础
   static BD_NAME: string = 'com.laotoudo.order_home.chen'
-  static readonly SPLASH_URL: string = `@bundle:${RouterConfig.BD_NAME}/home/ets/pages/SplashPage`
-  static readonly LOGIN_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/LoginPage`
+  static readonly SPLASH_URL: string = `@bundle:${RouterConfig.BD_NAME}/home/ets/pages/AdvStartPage/AdvStartPage`
+  static readonly LOGIN_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/LoginPage/LoginPage`
   static readonly USER_SET_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/SettingPage`
   static readonly USER_NAME_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/NickNamePage`
   // 我的消息
@@ -57,5 +57,4 @@ export class RouterConfig {
   // 报警设备
   static readonly DEVICE_ALARM_URL: string = `@bundle:${RouterConfig.BD_NAME}/device/ets/pages/AlarmDevicePage`
   static readonly DEVICE_ALARM_HANDLER_URL: string = `@bundle:${RouterConfig.BD_NAME}/device/ets/pages/AlarmHandlePage`
-
 }
