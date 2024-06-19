@@ -39,6 +39,46 @@
     {
       "name": "ec_normal_radius",
       "value": "8vp"
+    },
+    {
+      "name": "yk_vp_ten",
+      "value": "10vp"
+    },
+    {
+      "name": "yk_content_space",
+      "value": "15vp"
+    },
+    {
+      "name": "yk_micro_font_size",
+      "value": "10fp"
+    },
+    {
+      "name": "yk_big_title_font_size",
+      "value": "24fp"
+    },
+    {
+      "name": "yk_page_title_font_size",
+      "value": "20fp"
+    },
+    {
+      "name": "yk_module_title_font_size",
+      "value": "16fp"
+    },
+    {
+      "name": "yk_normal_font_size",
+      "value": "14fp"
+    },
+    {
+      "name": "yk_card_font_size",
+      "value": "13fp"
+    },
+    {
+      "name": "yk_small_font_size",
+      "value": "12fp"
+    },
+    {
+      "name": "yk_normal_radius",
+      "value": "8vp"
     }
   ]
 }
