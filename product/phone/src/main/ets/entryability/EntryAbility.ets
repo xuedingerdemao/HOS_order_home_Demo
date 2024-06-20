@@ -4,7 +4,15 @@ import { window } from '@kit.ArkUI';
 import { Log } from '@abner/log'
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn'
-import { AdvSettingStore, ADV_WIN, getAdvAPI, RouterConfig, TokenStore, TOKEN_KEY } from '@orderHome/common/basic';
+import {
+  AdvSettingStore,
+  ADV_WIN,
+  getAdvAPI,
+  RouterConfig,
+  TokenStore,
+  TOKEN_KEY,
+  UserStore
+} from '@orderHome/common/basic';
 
 // 设置语言为中文
 dayjs.locale('zh-cn');
@@ -36,6 +44,7 @@ export default class EntryAbility extends UIAbility {
 
     //加载广告
     const resAdv = await getAdvAPI()
+    const userStore = new UserStore(this.context)
     await advStore.setAdvStore(resAdv) // 写入首选项
     //如果有创建广告窗口
     if (resAdv.showAd) {
@@ -57,6 +66,7 @@ export default class EntryAbility extends UIAbility {
         hilog.info(0x0000, 'testTag', 'Succeeded in loading the content.');
       });
     } else {
+      userStore.delUserInfo()
       windowStage.loadContent(RouterConfig.LOGIN_URL)
     }
 

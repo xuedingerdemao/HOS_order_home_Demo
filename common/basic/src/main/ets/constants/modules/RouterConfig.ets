@@ -3,8 +3,8 @@ export class RouterConfig {
   static BD_NAME: string = 'com.laotoudo.order_home.chen'
   static readonly SPLASH_URL: string = `@bundle:${RouterConfig.BD_NAME}/home/ets/pages/AdvStartPage/AdvStartPage`
   static readonly LOGIN_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/LoginPage/LoginPage`
-  static readonly USER_SET_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/SettingPage`
-  static readonly USER_NAME_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/NickNamePage`
+  static readonly USER_SET_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/SettingPage/SettingPage`
+  static readonly USER_NAME_URL: string = `@bundle:${RouterConfig.BD_NAME}/mine/ets/pages/NickNamePage/NickNamePage`
   // 我的消息
   static readonly USER_MSG_URL: string = `@bundle:${RouterConfig.BD_NAME}/message/ets/pages/MsgPage`
   // 负责老人

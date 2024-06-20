@@ -1,14 +1,35 @@
 import router from '@ohos.router'
-import { ResManager, RouterConfig, UserData } from '@orderHome/common/basic'
+import { getUserApI, ResManager, RouterConfig, UserData, UserStore } from '@orderHome/common/basic'
 import { promptAction } from '@kit.ArkUI'
+import { Log } from '@abner/log'
 
 @Component
 export struct Mine {
   @StorageProp('topHeight')
   topHeight: number = 0
   @State
-  user: UserData = {} as UserData
+  userInfo: UserData = {} as UserData
+  userStore: UserStore = new UserStore(getContext())
 
+  /*-----------------------👇👇 function 👇👇--------------------------------*/
+  aboutToAppear(): void {
+    this.getUserInfo()
+  }
+
+  async getUserInfo() {
+    const res = await getUserApI()
+    Log.info(res)
+    this.userInfo = res
+    AppStorage.setOrCreate<UserData>('user', res)
+    await this.userStore.setUserInfo(res)
+  }
+
+  // 退出登录
+  async logout() {
+
+  }
+
+  /*-----------------------👇👇Builder 👇👇--------------------------------*/
   @Builder
   cellItem(title: string, url: string = '') {
     Row() {
@@ -34,7 +55,7 @@ export struct Mine {
       Column() {
         // 个人信息
         Column({ space: 5 }) {
-          Image(this.user?.avatar ||
+          Image(this.userInfo?.avatar ||
             'https://img2.baidu.com/it/u=130573784,2479509663&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=534')
             .width(74)
             .aspectRatio(1)
@@ -46,11 +67,11 @@ export struct Mine {
               radius: 21,
               color: '#0aa9941f'
             })
-          Text(this.user?.nickName)
+          Text(this.userInfo?.nickName)
             .fontSize(ResManager.EC_PAGE_TITLE_FS)
             .fontColor(ResManager.EC_MID_BLACK)
             .fontWeight(500)
-          Text(this.user?.username)
+          Text(this.userInfo?.username)
             .fontSize(13)
             .fontColor(ResManager.EC_MID_59)
 
@@ -129,10 +150,12 @@ export struct Mine {
         .backgroundColor('#fff')
         .margin({ top: 50 })
         .onClick(() => {
+          
         })
 
 
     }
+    .padding({ top: this.topHeight })
     .width('100%')
     .height('100%')
     .backgroundColor(ResManager.EC_MID_BG)
