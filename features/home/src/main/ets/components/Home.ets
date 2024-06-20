@@ -64,7 +64,12 @@ export struct Home {
     .padding({ top: 20, bottom: 23 })
     .backgroundColor(ResManager.EC_MID_WHITE)
     .onClick(() => {
-
+      router.pushUrl({
+        url: RouterConfig.USER_MSG_URL,
+        params: {
+          type: num
+        }
+      })
     })
   }
 
