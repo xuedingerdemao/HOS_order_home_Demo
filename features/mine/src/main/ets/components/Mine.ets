@@ -1,5 +1,14 @@
 import router from '@ohos.router'
-import { getUserApI, ResManager, RouterConfig, UserData, UserStore } from '@orderHome/common/basic'
+import {
+  EcDialogTips,
+  EcLoading,
+  getUserApI,
+  ResManager,
+  RouterConfig,
+  TokenStore,
+  UserData,
+  UserStore
+} from '@orderHome/common/basic'
 import { promptAction } from '@kit.ArkUI'
 import { Log } from '@abner/log'
 
@@ -10,6 +19,50 @@ export struct Mine {
   @State
   userInfo: UserData = {} as UserData
   userStore: UserStore = new UserStore(getContext())
+  // 退出登录
+  tipsDialog: CustomDialogController = new CustomDialogController({
+    builder: EcDialogTips(
+      {
+        title: '',
+        tipsContent: () => {
+          this.textItem()
+        },
+        cancelButton: {
+          text: '取消',
+          color: ResManager.EC_MID_59,
+          cb: () => {
+            this.tipsDialog.close()
+          }
+        },
+        confirmButton: {
+          text: '确定退出',
+          color: ResManager.EC_SUB_RED,
+          cb: () => {
+            //删除token、用户信息，跳转登录页
+            TokenStore.delToken()
+            this.userStore.delUserInfo()
+            router.replaceUrl({
+              url: RouterConfig.LOGIN_URL
+            })
+            // 清除路由历史记录
+            router.clear()
+            this.tipsDialog.close()
+          }
+        }
+
+      }
+    ),
+    customStyle: true,
+    alignment: DialogAlignment.Center
+  })
+  //loading
+  loading: CustomDialogController = new CustomDialogController({
+    builder: EcLoading({
+      tip: '加载中...',
+    }),
+    customStyle: true,
+    alignment: DialogAlignment.Center
+  })
 
   /*-----------------------👇👇 function 👇👇--------------------------------*/
   aboutToAppear(): void {
@@ -17,16 +70,13 @@ export struct Mine {
   }
 
   async getUserInfo() {
+    this.loading.open()
     const res = await getUserApI()
+    this.loading.close()
     Log.info(res)
     this.userInfo = res
     AppStorage.setOrCreate<UserData>('user', res)
     await this.userStore.setUserInfo(res)
-  }
-
-  // 退出登录
-  async logout() {
-
   }
 
   /*-----------------------👇👇Builder 👇👇--------------------------------*/
@@ -47,6 +97,14 @@ export struct Mine {
     .padding({ top: 14, bottom: 14 })
     .justifyContent(FlexAlign.SpaceBetween)
     .onClick(() => router.pushUrl({ url }))
+  }
+
+  @Builder
+  textItem() {
+    Column() {
+      Text('确定要退出吗？')
+        .fontSize(18)
+    }
   }
 
   build() {
@@ -150,7 +208,7 @@ export struct Mine {
         .backgroundColor('#fff')
         .margin({ top: 50 })
         .onClick(() => {
-          
+          this.tipsDialog.open()
         })
 
 

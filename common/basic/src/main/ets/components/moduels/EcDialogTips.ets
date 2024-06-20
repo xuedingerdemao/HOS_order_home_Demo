@@ -18,6 +18,7 @@ class ButtonConfig {
  }
  }
  */
+@Preview
 @CustomDialog
 export struct EcDialogTips {
   // 提示标题
