@@ -41,7 +41,7 @@ export struct Home {
   msgItem(title: string, icon: Resource | string, num: number) {
     Column() {
       Badge({
-        count: num,
+        count: num === 1 ? this.msgCount?.elderAlertMsgCount! : this.msgCount?.nursingTaskMsgCount!,
         position: BadgePosition.RightTop, style: {
           badgeColor: '#FF6363',
           borderColor: '#fff',
@@ -130,13 +130,13 @@ export struct Home {
   }
 
   /*-----------------------👇👇 function 👇👇--------------------------------*/
-  async getMsgCount() {
-    const data = await getMessageCountAPI()
-    promptAction.showDialog({ message: JSON.stringify(data) })
-  }
-
   aboutToAppear(): void {
     this.getMsgCount()
+  }
+
+  async getMsgCount() {
+    const data = await getMessageCountAPI()
+    this.msgCount = data
   }
 
   build() {
