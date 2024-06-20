@@ -64,7 +64,7 @@ export struct Duty {
     Column() {
       // 标题
       Row() {
-        Text('负责老人')
+        Text('负责对象')
           .fontSize(24)
           .fontColor('#000')
           .fontWeight(500)
