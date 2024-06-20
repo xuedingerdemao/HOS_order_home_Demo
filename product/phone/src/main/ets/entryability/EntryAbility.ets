@@ -23,14 +23,14 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
+    TokenStore.context = this.context
     const advStore = new AdvSettingStore(this.context)
-    const tokenStore = new TokenStore(this.context)
 
     // 设置全屏 沉浸式
-    const win = await windowStage.getMainWindowSync()
+    const win = windowStage.getMainWindowSync()
     win.setWindowLayoutFullScreen(true)
-    const topHeight = await win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM).topRect.height
-    const bottomHeight = await win.getWindowAvoidArea(window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR).bottomRect.height
+    const topHeight = win.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM).topRect.height
+    const bottomHeight = win.getWindowAvoidArea(window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR).bottomRect.height
     AppStorage.setOrCreate("topHeight", px2vp(topHeight))
     AppStorage.setOrCreate("bottomHeight", px2vp(bottomHeight))
 
@@ -45,7 +45,7 @@ export default class EntryAbility extends UIAbility {
       //展示广告窗口
       win.setUIContent(RouterConfig.SPLASH_URL)
     }
-    const token = await tokenStore.getToken()
+    const token = TokenStore.getToken()
     //设置token首选项
     AppStorage.setOrCreate(TOKEN_KEY, token)
     if (token) {

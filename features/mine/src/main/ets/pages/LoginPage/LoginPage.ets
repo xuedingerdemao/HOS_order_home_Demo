@@ -7,8 +7,6 @@ import { promptAction, router } from '@kit.ArkUI';
 @Entry
 @Component
 struct LoginPage {
-  tokenStore: TokenStore = new TokenStore(getContext())
-
   /*-----------------------👇👇 function 👇👇--------------------------------*/
   // 登录方法
   login() {
@@ -25,12 +23,9 @@ struct LoginPage {
     // 执行请求
     try {
       let controller = new authentication.AuthenticationController(getContext(this));
-      const testToken =
-        'eyJhbGciOiJIUzI1NiJ9.eyJjdXJyZW50VXNlciI6IntcInVzZXJuYW1lXCI6XCJobGJ6QHFxLmNvbVwiLFwicGFzc3dvcmRcIjpcIlwiLFwibmlja05hbWVcIjpcIuaKpOeQhumDqOmDqOmVv1wiLFwiZW1haWxcIjpcImhsYnpAcXEuY29tXCIsXCJyZWFsTmFtZVwiOlwi5oqk55CG6YOo6YOo6ZW_XCIsXCJtb2JpbGVcIjpcIlwiLFwic2V4XCI6XCJcIixcImRlcHROb1wiOlwiMTAwMDAxMDA1MDAwMDAwXCIsXCJwb3N0Tm9cIjpcIjEwMDAwMTAwNTAwMTAwMFwiLFwiaWRcIjoxNjcxNDAzMjU2NTE5MDc4MTU2LFwiY3JlYXRlVGltZVwiOjE2OTU3MTAwNzYwMDAsXCJ1cGRhdGVUaW1lXCI6MTY5NTcxMDA3NjAwMCxcImNyZWF0ZUJ5XCI6MTY3MTQwMzI1NjUxOTA3ODEzOH0iLCJleHAiOjE0Njc1MzEyNzU0fQ.n3EJBhfA1YIJ1tyASI4ruNbmDutY_xHAvdwPClizfpo'
       controller.executeRequest(authRequest, async (err, data) => {
         if (err) {
 
-          await this.tokenStore.setToken(testToken)
           Log.error('auth fail,error: %{public}s' + JSON.stringify(err));
           return;
         }
@@ -56,7 +51,7 @@ struct LoginPage {
         })
         Log.info('token👼' + token)
         // 持久化
-        await this.tokenStore.setToken(token)
+        await TokenStore.setToken(token)
         router.replaceUrl({
           url: 'pages/Index'
         })
@@ -64,6 +59,17 @@ struct LoginPage {
     } catch (error) {
       Log.error('auth failed: %{public}s' + JSON.stringify(error));
     }
+  }
+
+  // 测试用
+  async testLogin() {
+    const token =
+      'eyJhbGciOiJIUzI1NiJ9.eyJjdXJyZW50VXNlciI6IntcInVzZXJuYW1lXCI6XCIzNTQyMzQ4NEBxcS5jb21cIixcInBhc3N3b3JkXCI6XCJcIixcIm5pY2tOYW1lXCI6XCLmiqTnkIblkZgxXCIsXCJlbWFpbFwiOlwiMzU0MjM0ODRAcXEuY29tXCIsXCJyZWFsTmFtZVwiOlwi5oqk55CG5ZGYMVwiLFwibW9iaWxlXCI6XCIxODIxMTAyMTg5NlwiLFwic2V4XCI6XCIwXCIsXCJkZXB0Tm9cIjpcIjEwMDAwMTAwNTAwMDAwMFwiLFwicG9zdE5vXCI6XCIxMDAwMDEwMDUwMDMwMDBcIixcImRhdGFTdGF0ZVwiOlwiMFwiLFwiYXZhdGFyXCI6XCJodHRwczovL3lqeS1vc3MtdmlkZW9zLm9zcy1hY2NlbGVyYXRlLmFsaXl1bmNzLmNvbS9ncnp4aHouanBnXCIsXCJpZFwiOjE2NzE0MDMyNTY1MTkwNzgyNzUsXCJjcmVhdGVUaW1lXCI6MTcxNTU2ODM5MDAwMCxcInVwZGF0ZVRpbWVcIjoxNzE1NTY4MzkwMDAwLFwiY3JlYXRlQnlcIjoxNjcxNDAzMjU2NTE5MDc4MTM4fSIsImV4cCI6MTQ2NzU2NTk0Nzd9.8PrMKBNrVVCfcI4DgICxp6oBQGqy46m3oglFQCiKtzw'
+    // 持久化
+    await TokenStore.setToken(token)
+    router.replaceUrl({
+      url: 'pages/Index'
+    })
   }
 
   build() {
@@ -105,7 +111,7 @@ struct LoginPage {
         .height(40)
         .backgroundColor(ResManager.EC_MAIN_COLOR)
         .onClick(() => {
-          this.login()
+          this.testLogin()
         })
 
       }

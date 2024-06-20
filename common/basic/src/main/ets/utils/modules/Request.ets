@@ -18,13 +18,12 @@ const instance = axios.create({
   timeout: 5000    // 请求超时时间
 })
 
-const tokenStore = new TokenStore(getContext())
 /*请求拦截器
  *
  *
 */
-instance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-  const token = await tokenStore.getToken()
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = TokenStore.getToken()
   if (token) {
     config.headers.Authorization = token
   }
@@ -50,7 +49,7 @@ instance.interceptors.response.use((response: AxiosResponse) => {
 }, (error: AxiosError) => {
   if (error.response?.status === 401) {
     promptAction.showToast({ message: '登录超时，请重新登陆' })
-    tokenStore.delToken()
+    TokenStore.delToken()
     router.replaceUrl({
       url: RouterConfig.LOGIN_URL
     })
