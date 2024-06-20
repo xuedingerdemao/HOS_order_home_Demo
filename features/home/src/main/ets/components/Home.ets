@@ -1,6 +1,7 @@
 import router from '@ohos.router'
-import { ResManager, RouterConfig } from '@orderHome/common/basic/'
-import { getMessageCountApI } from '../api'
+import { ResManager, RouterConfig } from '@orderHome/common/basic'
+import { getMessageCountAPI } from '../api'
+import { MessageCountData } from '../model'
 import { promptAction } from '@kit.ArkUI'
 
 // 模块排列位置
@@ -12,8 +13,14 @@ enum Pos {
 @Component
 export struct Home {
   tabsController: TabsController = new TabsController()
-
   /*-----------------------👇👇 Styles 👇👇--------------------------------*/
+
+  @State
+  msgCount: MessageCountData | null = null
+
+  /*-----------------------👇👇 Builder 👇👇--------------------------------*/
+  // 消息
+
   // 可复用样式
   @Styles
   modStyle() {
@@ -22,8 +29,8 @@ export struct Home {
     .backgroundColor(ResManager.EC_MID_WHITE)
   }
 
-  /*-----------------------👇👇 Builder 👇👇--------------------------------*/
-  // 消息
+  // 模块item
+
   /**
    *
    * @param title
@@ -61,7 +68,6 @@ export struct Home {
     })
   }
 
-  // 模块item
   /**
    *
    * @param title
@@ -124,14 +130,13 @@ export struct Home {
   }
 
   /*-----------------------👇👇 function 👇👇--------------------------------*/
+  async getMsgCount() {
+    const data = await getMessageCountAPI()
+    promptAction.showDialog({ message: JSON.stringify(data) })
+  }
 
   aboutToAppear(): void {
     this.getMsgCount()
-  }
-
-  async getMsgCount() {
-    const data = await getMessageCountApI()
-    promptAction.showDialog({ message: JSON.stringify(data) })
   }
 
   build() {

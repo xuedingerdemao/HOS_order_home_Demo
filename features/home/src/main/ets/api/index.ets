@@ -1,1 +1,1 @@
-export * from './moduels/getMessageCountApI'
+export * from './modules/MsgApI'

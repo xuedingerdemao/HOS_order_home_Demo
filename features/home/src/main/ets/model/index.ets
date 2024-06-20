@@ -1,1 +1,1 @@
-export * from './moduels/MessageCountData'
+export * from './modules/MessageCountData'
