@@ -52,7 +52,7 @@ export struct Mine {
 
       }
     ),
-    customStyle: true,
+    // customStyle: true,
     alignment: DialogAlignment.Center
   })
   //loading

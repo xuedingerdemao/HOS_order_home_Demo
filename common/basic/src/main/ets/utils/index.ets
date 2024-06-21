@@ -7,3 +7,5 @@ export * from './modules/AdvStore'
 export * from './modules/ResManager'
 
 export * from './modules/UserStore'
+
+export * from './modules/getDeviceMap'

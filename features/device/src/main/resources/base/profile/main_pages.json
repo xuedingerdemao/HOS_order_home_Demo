@@ -1,5 +1,9 @@
 {
   "src": [
-    "pages/Index"
+    "pages/Index",
+    "pages/BindDevicePage",
+    "pages/SetupDevicePage",
+    "pages/MyDevicePage",
+    "pages/AlarmDevicePage"
   ]
 }
